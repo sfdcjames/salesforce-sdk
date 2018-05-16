@@ -1339,6 +1339,7 @@ public class IBMDiscoveryV1 extends IBMWatsonService {
   }
 
   /**
+<<<<<<< HEAD
    * Delete labeled data.
    *
    * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with the customer ID.   You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data. For more information about personal data and customer IDs, see [Information security](https://console.bluemix.net/docs/services/discovery/information-security.html).
@@ -1361,6 +1362,35 @@ public class IBMDiscoveryV1 extends IBMWatsonService {
     }
 
     createServiceCall(builder.build(), null);
+  }
+
+  /**
+   * Create an event.
+   *
+   * Creates a new event.  An event is a user or system generated activity that indicates positive or negative feedback about a particular result or passage.
+   *
+   * @param createEventOptions the {@link IBMDiscoveryV1Models.CreateEventOptions} containing the options for the call
+   * @return the {@link IBMDiscoveryV1Models.Event} with the response
+   */
+  public IBMDiscoveryV1Models.Event createEvent(IBMDiscoveryV1Models.CreateEventOptions createEventOptions) {
+    IBMWatsonRequestBuilder builder = IBMWatsonRequestBuilder.httpPost(getEndPoint() + '/v1/events');
+    Map<String, String> requestHeaders = (createEventOptions != null) ? createEventOptions.requestHeaders() : null;
+    if (requestHeaders != null && requestHeaders.size() > 0) {
+      for (String name : requestHeaders.keySet()) {
+        builder.addHeader(name, requestHeaders.get(name));
+      }
+    }
+    builder.query('version', versionDate);
+    final Map<String, Object> contentJson = new Map<String, Object>();
+    if (createEventOptions.typeField() != null) {
+      contentJson.put('type', createEventOptions.typeField());
+    }
+    if (createEventOptions.data() != null) {
+      contentJson.put('data', createEventOptions.data());
+    }
+    builder.bodyJson(JSON.serialize(contentJson, true));
+
+    return (IBMDiscoveryV1Models.Event) createServiceCall(builder.build(), IBMDiscoveryV1Models.Event.class);
   }
 
 }

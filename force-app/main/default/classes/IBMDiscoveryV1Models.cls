@@ -1745,6 +1745,124 @@ public class IBMDiscoveryV1Models {
   }
 
   /**
+   * The createEvent options.
+   */
+  public class CreateEventOptions extends IBMWatsonOptionsModel {
+    private String type_serialized_name;
+    private EventData data_serialized_name;
+    /**
+     * Gets the type_serialized_name.
+     *
+     * type of the training event.
+     *
+     * @return the type_serialized_name
+     */
+    public String typeField() {
+      return type_serialized_name;
+    }
+    /**
+     * Gets the data_serialized_name.
+     *
+     * payload object for event data.
+     *
+     * @return the data_serialized_name
+     */
+    public EventData data() {
+      return data_serialized_name;
+    }
+    private CreateEventOptions(CreateEventOptionsBuilder builder) {
+      type_serialized_name = builder.type_serialized_name;
+      data_serialized_name = builder.data_serialized_name;
+      this.requestHeaders = builder.requestHeaders;
+    }
+
+    /**
+     * New builder.
+     *
+     * @return a CreateEventOptions builder
+     */
+    public CreateEventOptionsBuilder newBuilder() {
+      return new CreateEventOptionsBuilder(this);
+    }
+
+  }
+
+  /**
+   * CreateEventOptions Builder.
+   */
+  public class CreateEventOptionsBuilder extends IBMWatsonOptionsModel {
+    private String type_serialized_name;
+    private EventData data_serialized_name;
+
+    private CreateEventOptionsBuilder(CreateEventOptions createEventOptions) {
+      type_serialized_name = createEventOptions.type_serialized_name;
+      data_serialized_name = createEventOptions.data_serialized_name;
+      this.requestHeaders.putAll(createEventOptions.requestHeaders());
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public CreateEventOptionsBuilder() {
+    }
+
+    /**
+     * Builds a CreateEventOptions.
+     *
+     * @return the createEventOptions
+     */
+    public CreateEventOptions build() {
+      return new CreateEventOptions(this);
+    }
+
+    /**
+     * Set the type_serialized_name.
+     *
+     * @param typeVar the typeVar
+     * @return the CreateEventOptions builder
+     */
+    public CreateEventOptionsBuilder typeField(String typeVar) {
+      this.type_serialized_name = typeVar;
+      return this;
+    }
+
+    /**
+     * Set the data_serialized_name.
+     *
+     * @param data the data
+     * @return the CreateEventOptions builder
+     */
+    public CreateEventOptionsBuilder data(EventData data) {
+      this.data_serialized_name = data;
+      return this;
+    }
+
+    /**
+     * Set the event.
+     *
+     * @param event the event
+     * @return the CreateEventOptions builder
+     */
+    public CreateEventOptionsBuilder event(Event event) {
+      this.type_serialized_name = event.getType();
+      this.data_serialized_name = event.getData();
+      return this;
+    }
+
+    /**
+     * Add a request header.
+     *
+     * @param name the header name
+     * @param value the header value
+     * @return the CreateEventOptions builder
+     */
+    public CreateEventOptionsBuilder addHeader(String name, String value) {
+      this.requestHeaders.put(name, value);
+      return this;
+    }
+  }
+
+  /**
    * The createExpansions options.
    */
   public class CreateExpansionsOptions extends IBMWatsonOptionsModel {
@@ -4227,6 +4345,294 @@ public class IBMDiscoveryV1Models {
       }
 
       EnvironmentDocuments ret = (EnvironmentDocuments) super.deserialize(jsonString, jsonMap, classType);
+
+      return ret;
+    }
+  }
+
+  /**
+   * Object containing training event information.
+   */
+  public class Event extends IBMWatsonResponseModel {
+    private String type_serialized_name;
+    private EventData data_serialized_name;
+    /**
+     * Gets the type_serialized_name.
+     *
+     * type of the training event.
+     *
+     * @return the type_serialized_name
+     */
+    @AuraEnabled
+    public String getType() {
+      return type_serialized_name;
+    }
+    /**
+     * Gets the data_serialized_name.
+     *
+     * payload object for event data.
+     *
+     * @return the data_serialized_name
+     */
+    @AuraEnabled
+    public EventData getData() {
+      return data_serialized_name;
+    }
+
+    /**
+     * Sets the type_serialized_name.
+     *
+     * @param typeVar the new typeVar
+     */
+    public void setType(final String typeVar) {
+      this.type_serialized_name = typeVar;
+    }
+
+    /**
+     * Sets the data_serialized_name.
+     *
+     * @param data the new data
+     */
+    public void setData(final EventData data) {
+      this.data_serialized_name = data;
+    }
+
+    public override Object deserialize(String jsonString, Map<String, Object> jsonMap, Type classType) {
+      if (jsonMap == null) {
+        return null;
+      }
+
+      Event ret = (Event) super.deserialize(jsonString, jsonMap, classType);
+
+      // calling custom deserializer for data_serialized_name
+      EventData newData = (EventData) new EventData().deserialize(JSON.serialize(ret.getData()), (Map<String, Object>) jsonMap.get('data_serialized_name'), EventData.class);
+      ret.setData(newData);
+
+      return ret;
+    }
+  }
+
+  /**
+   * Object payload for an event.
+   */
+  public class EventData extends IBMWatsonGenericModel {
+    private String environment_id_serialized_name;
+    private String collection_id_serialized_name;
+    private String document_id_serialized_name;
+    private String session_token_serialized_name;
+    private Datetime client_timestamp_serialized_name;
+    private Long display_rank_serialized_name;
+    private String result_type_serialized_name;
+    private String field_serialized_name;
+    private Long start_offset_serialized_name;
+    private Long end_offset_serialized_name;
+    /**
+     * Gets the environment_id_serialized_name.
+     *
+     * environment id for the event.
+     *
+     * @return the environment_id_serialized_name
+     */
+    @AuraEnabled
+    public String getEnvironmentId() {
+      return environment_id_serialized_name;
+    }
+    /**
+     * Gets the collection_id_serialized_name.
+     *
+     * collection id for the event result.
+     *
+     * @return the collection_id_serialized_name
+     */
+    @AuraEnabled
+    public String getCollectionId() {
+      return collection_id_serialized_name;
+    }
+    /**
+     * Gets the document_id_serialized_name.
+     *
+     * document id for the event results.
+     *
+     * @return the document_id_serialized_name
+     */
+    @AuraEnabled
+    public String getDocumentId() {
+      return document_id_serialized_name;
+    }
+    /**
+     * Gets the session_token_serialized_name.
+     *
+     * session token for the event.
+     *
+     * @return the session_token_serialized_name
+     */
+    @AuraEnabled
+    public String getSessionToken() {
+      return session_token_serialized_name;
+    }
+    /**
+     * Gets the client_timestamp_serialized_name.
+     *
+     * timestamp from the client that the event was performed, in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+     *
+     * @return the client_timestamp_serialized_name
+     */
+    @AuraEnabled
+    public Datetime getClientTimestamp() {
+      return client_timestamp_serialized_name;
+    }
+    /**
+     * Gets the display_rank_serialized_name.
+     *
+     * rank in the result set that the document_id is displayed at.
+     *
+     * @return the display_rank_serialized_name
+     */
+    @AuraEnabled
+    public Long getDisplayRank() {
+      return display_rank_serialized_name;
+    }
+    /**
+     * Gets the result_type_serialized_name.
+     *
+     * event result type of either 'document' or 'passage'.
+     *
+     * @return the result_type_serialized_name
+     */
+    @AuraEnabled
+    public String getResultType() {
+      return result_type_serialized_name;
+    }
+    /**
+     * Gets the field_serialized_name.
+     *
+     * if result_type is 'passage', the field that the passage came from.
+     *
+     * @return the field_serialized_name
+     */
+    @AuraEnabled
+    public String getField() {
+      return field_serialized_name;
+    }
+    /**
+     * Gets the start_offset_serialized_name.
+     *
+     * if result_type is 'passage', the starting offset of the passage text.
+     *
+     * @return the start_offset_serialized_name
+     */
+    @AuraEnabled
+    public Long getStartOffset() {
+      return start_offset_serialized_name;
+    }
+    /**
+     * Gets the end_offset_serialized_name.
+     *
+     * if result_type is 'passage', the ending offset of the passage text.
+     *
+     * @return the end_offset_serialized_name
+     */
+    @AuraEnabled
+    public Long getEndOffset() {
+      return end_offset_serialized_name;
+    }
+
+    /**
+     * Sets the environment_id_serialized_name.
+     *
+     * @param environmentId the new environmentId
+     */
+    public void setEnvironmentId(final String environmentId) {
+      this.environment_id_serialized_name = environmentId;
+    }
+
+    /**
+     * Sets the collection_id_serialized_name.
+     *
+     * @param collectionId the new collectionId
+     */
+    public void setCollectionId(final String collectionId) {
+      this.collection_id_serialized_name = collectionId;
+    }
+
+    /**
+     * Sets the document_id_serialized_name.
+     *
+     * @param documentId the new documentId
+     */
+    public void setDocumentId(final String documentId) {
+      this.document_id_serialized_name = documentId;
+    }
+
+    /**
+     * Sets the session_token_serialized_name.
+     *
+     * @param sessionToken the new sessionToken
+     */
+    public void setSessionToken(final String sessionToken) {
+      this.session_token_serialized_name = sessionToken;
+    }
+
+    /**
+     * Sets the client_timestamp_serialized_name.
+     *
+     * @param clientTimestamp the new clientTimestamp
+     */
+    public void setClientTimestamp(final Datetime clientTimestamp) {
+      this.client_timestamp_serialized_name = clientTimestamp;
+    }
+
+    /**
+     * Sets the display_rank_serialized_name.
+     *
+     * @param displayRank the new displayRank
+     */
+    public void setDisplayRank(final long displayRank) {
+      this.display_rank_serialized_name = displayRank;
+    }
+
+    /**
+     * Sets the result_type_serialized_name.
+     *
+     * @param resultType the new resultType
+     */
+    public void setResultType(final String resultType) {
+      this.result_type_serialized_name = resultType;
+    }
+
+    /**
+     * Sets the field_serialized_name.
+     *
+     * @param field the new field
+     */
+    public void setField(final String field) {
+      this.field_serialized_name = field;
+    }
+
+    /**
+     * Sets the start_offset_serialized_name.
+     *
+     * @param startOffset the new startOffset
+     */
+    public void setStartOffset(final long startOffset) {
+      this.start_offset_serialized_name = startOffset;
+    }
+
+    /**
+     * Sets the end_offset_serialized_name.
+     *
+     * @param endOffset the new endOffset
+     */
+    public void setEndOffset(final long endOffset) {
+      this.end_offset_serialized_name = endOffset;
+    }
+
+    public override Object deserialize(String jsonString, Map<String, Object> jsonMap, Type classType) {
+      if (jsonMap == null) {
+        return null;
+      }
+
+      EventData ret = (EventData) super.deserialize(jsonString, jsonMap, classType);
 
       return ret;
     }
@@ -12769,6 +13175,7 @@ public class IBMDiscoveryV1Models {
    */
   public class QueryResponse extends IBMWatsonResponseModel {
     private Long matching_results_serialized_name;
+    private String session_token_serialized_name;
     private List<QueryResult> results_serialized_name;
     private List<QueryAggregation> aggregations_serialized_name;
     private List<QueryPassages> passages_serialized_name;
@@ -12781,6 +13188,17 @@ public class IBMDiscoveryV1Models {
     @AuraEnabled
     public Long getMatchingResults() {
       return matching_results_serialized_name;
+    }
+    /**
+     * Gets the session_token_serialized_name.
+     *
+     * The generated token used as a unique identifier of the current session.
+     *
+     * @return the session_token_serialized_name
+     */
+    @AuraEnabled
+    public String getSessionToken() {
+      return session_token_serialized_name;
     }
     /**
      * Gets the results_serialized_name.
@@ -12826,6 +13244,15 @@ public class IBMDiscoveryV1Models {
      */
     public void setMatchingResults(final long matchingResults) {
       this.matching_results_serialized_name = matchingResults;
+    }
+
+    /**
+     * Sets the session_token_serialized_name.
+     *
+     * @param sessionToken the new sessionToken
+     */
+    public void setSessionToken(final String sessionToken) {
+      this.session_token_serialized_name = sessionToken;
     }
 
     /**
