@@ -1771,6 +1771,8 @@ public class IBMDiscoveryV1Models {
       return data_serialized_name;
     }
     private CreateEventOptions(CreateEventOptionsBuilder builder) {
+      IBMWatsonValidator.notNull(builder.type_serialized_name, 'type_serialized_name cannot be null');
+      IBMWatsonValidator.notNull(builder.data_serialized_name, 'data_serialized_name cannot be null');
       type_serialized_name = builder.type_serialized_name;
       data_serialized_name = builder.data_serialized_name;
       this.requestHeaders = builder.requestHeaders;
@@ -1807,6 +1809,17 @@ public class IBMDiscoveryV1Models {
     }
 
     /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param typeVar the typeVar
+     * @param data the data
+     */
+    public CreateEventOptionsBuilder(String typeVar, EventData data) {
+      this.type_serialized_name = typeVar;
+      this.data_serialized_name = data;
+    }
+
+    /**
      * Builds a CreateEventOptions.
      *
      * @return the createEventOptions
@@ -1834,18 +1847,6 @@ public class IBMDiscoveryV1Models {
      */
     public CreateEventOptionsBuilder data(EventData data) {
       this.data_serialized_name = data;
-      return this;
-    }
-
-    /**
-     * Set the event.
-     *
-     * @param event the event
-     * @return the CreateEventOptions builder
-     */
-    public CreateEventOptionsBuilder event(Event event) {
-      this.type_serialized_name = event.getType();
-      this.data_serialized_name = event.getData();
       return this;
     }
 
@@ -4351,71 +4352,9 @@ public class IBMDiscoveryV1Models {
   }
 
   /**
-   * Object containing training event information.
-   */
-  public class Event extends IBMWatsonResponseModel {
-    private String type_serialized_name;
-    private EventData data_serialized_name;
-    /**
-     * Gets the type_serialized_name.
-     *
-     * type of the training event.
-     *
-     * @return the type_serialized_name
-     */
-    @AuraEnabled
-    public String getType() {
-      return type_serialized_name;
-    }
-    /**
-     * Gets the data_serialized_name.
-     *
-     * payload object for event data.
-     *
-     * @return the data_serialized_name
-     */
-    @AuraEnabled
-    public EventData getData() {
-      return data_serialized_name;
-    }
-
-    /**
-     * Sets the type_serialized_name.
-     *
-     * @param typeVar the new typeVar
-     */
-    public void setType(final String typeVar) {
-      this.type_serialized_name = typeVar;
-    }
-
-    /**
-     * Sets the data_serialized_name.
-     *
-     * @param data the new data
-     */
-    public void setData(final EventData data) {
-      this.data_serialized_name = data;
-    }
-
-    public override Object deserialize(String jsonString, Map<String, Object> jsonMap, Type classType) {
-      if (jsonMap == null) {
-        return null;
-      }
-
-      Event ret = (Event) super.deserialize(jsonString, jsonMap, classType);
-
-      // calling custom deserializer for data_serialized_name
-      EventData newData = (EventData) new EventData().deserialize(JSON.serialize(ret.getData()), (Map<String, Object>) jsonMap.get('data_serialized_name'), EventData.class);
-      ret.setData(newData);
-
-      return ret;
-    }
-  }
-
-  /**
    * Object payload for an event.
    */
-  public class EventData extends IBMWatsonGenericModel {
+  public class EventData {
     private String environment_id_serialized_name;
     private String collection_id_serialized_name;
     private String document_id_serialized_name;
@@ -4433,7 +4372,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the environment_id_serialized_name
      */
-    @AuraEnabled
     public String getEnvironmentId() {
       return environment_id_serialized_name;
     }
@@ -4444,7 +4382,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the collection_id_serialized_name
      */
-    @AuraEnabled
     public String getCollectionId() {
       return collection_id_serialized_name;
     }
@@ -4455,7 +4392,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the document_id_serialized_name
      */
-    @AuraEnabled
     public String getDocumentId() {
       return document_id_serialized_name;
     }
@@ -4466,7 +4402,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the session_token_serialized_name
      */
-    @AuraEnabled
     public String getSessionToken() {
       return session_token_serialized_name;
     }
@@ -4477,7 +4412,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the client_timestamp_serialized_name
      */
-    @AuraEnabled
     public Datetime getClientTimestamp() {
       return client_timestamp_serialized_name;
     }
@@ -4488,7 +4422,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the display_rank_serialized_name
      */
-    @AuraEnabled
     public Long getDisplayRank() {
       return display_rank_serialized_name;
     }
@@ -4499,7 +4432,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the result_type_serialized_name
      */
-    @AuraEnabled
     public String getResultType() {
       return result_type_serialized_name;
     }
@@ -4510,7 +4442,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the field_serialized_name
      */
-    @AuraEnabled
     public String getField() {
       return field_serialized_name;
     }
@@ -4521,7 +4452,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the start_offset_serialized_name
      */
-    @AuraEnabled
     public Long getStartOffset() {
       return start_offset_serialized_name;
     }
@@ -4532,7 +4462,6 @@ public class IBMDiscoveryV1Models {
      *
      * @return the end_offset_serialized_name
      */
-    @AuraEnabled
     public Long getEndOffset() {
       return end_offset_serialized_name;
     }
@@ -4627,15 +4556,6 @@ public class IBMDiscoveryV1Models {
       this.end_offset_serialized_name = endOffset;
     }
 
-    public override Object deserialize(String jsonString, Map<String, Object> jsonMap, Type classType) {
-      if (jsonMap == null) {
-        return null;
-      }
-
-      EventData ret = (EventData) super.deserialize(jsonString, jsonMap, classType);
-
-      return ret;
-    }
   }
 
   /**

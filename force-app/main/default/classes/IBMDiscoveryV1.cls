@@ -1370,9 +1370,10 @@ public class IBMDiscoveryV1 extends IBMWatsonService {
    * Creates a new event.  An event is a user or system generated activity that indicates positive or negative feedback about a particular result or passage.
    *
    * @param createEventOptions the {@link IBMDiscoveryV1Models.CreateEventOptions} containing the options for the call
-   * @return the {@link IBMDiscoveryV1Models.Event} with the response
+   * @return the service call
    */
-  public IBMDiscoveryV1Models.Event createEvent(IBMDiscoveryV1Models.CreateEventOptions createEventOptions) {
+  public void createEvent(IBMDiscoveryV1Models.CreateEventOptions createEventOptions) {
+    IBMWatsonValidator.notNull(createEventOptions, 'createEventOptions cannot be null');
     IBMWatsonRequestBuilder builder = IBMWatsonRequestBuilder.httpPost(getEndPoint() + '/v1/events');
     Map<String, String> requestHeaders = (createEventOptions != null) ? createEventOptions.requestHeaders() : null;
     if (requestHeaders != null && requestHeaders.size() > 0) {
@@ -1382,15 +1383,11 @@ public class IBMDiscoveryV1 extends IBMWatsonService {
     }
     builder.query('version', versionDate);
     final Map<String, Object> contentJson = new Map<String, Object>();
-    if (createEventOptions.typeField() != null) {
-      contentJson.put('type', createEventOptions.typeField());
-    }
-    if (createEventOptions.data() != null) {
-      contentJson.put('data', createEventOptions.data());
-    }
+    contentJson.put('type', createEventOptions.typeField());
+    contentJson.put('data', createEventOptions.data());
     builder.bodyJson(JSON.serialize(contentJson, true));
 
-    return (IBMDiscoveryV1Models.Event) createServiceCall(builder.build(), IBMDiscoveryV1Models.Event.class);
+    createServiceCall(builder.build(), null);
   }
 
 }
